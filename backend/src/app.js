@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParse = require("cookie-parser");
 const morgan = require("morgan");
-// const userRoutes = require("./modules/user/userRoutes.js");
+const userRoutes = require("./modules/user/userRoutes.js");
 const authRoutes = require("./modules/auth/authRoutes.js");
 // const presensiRoutes = require("./module/presensi/presensiRoutes.js");
 // const laporanRoutes = require("./modules/laporan/laporanRoutes.js");
@@ -34,7 +34,7 @@ app.use(morgan("dev"));
 
 // Routing
 app.use("/api/auth", authRoutes);
-// app.use("/api/users", userRoutes);
+app.use("/api/users", userRoutes);
 // app.use("/api/presensi", presensiRoutes);
 // app.use("/api/laporan", laporanRoutes);
 
