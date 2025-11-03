@@ -10,6 +10,7 @@ const findById = async (id) => {
         fullName: true,
         email: true,
         phone: true,
+        role: true,
         isActive: true,
         createdAt: true,
       },

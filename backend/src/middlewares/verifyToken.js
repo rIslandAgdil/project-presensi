@@ -3,12 +3,13 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const { sendError } = require("../utils/response");
 
 const verifyToken = async (req, res, next) => {
-  const { token } = req.cookies;
-  if (!token) {
+  const { access_token } = req.cookies;
+
+  if (!access_token) {
     return sendError(res, "Token tidak ditemukan", 400);
   }
   try {
-    const decoded = jwt.verify(token, JWT_SECRET_KEY);
+    const decoded = jwt.verify(access_token, JWT_SECRET_KEY);
     req.user = decoded;
     next();
   } catch (error) {

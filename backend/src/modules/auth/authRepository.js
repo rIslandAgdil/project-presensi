@@ -5,9 +5,10 @@ const findByNIP = async (NIP) => {
     const data = await prisma.user.findUnique({
       where: { NIP },
     });
+
     return data;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 };
 
