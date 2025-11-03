@@ -5,7 +5,7 @@ const cookieParse = require("cookie-parser");
 const morgan = require("morgan");
 const userRoutes = require("./modules/user/userRoutes.js");
 const authRoutes = require("./modules/auth/authRoutes.js");
-// const presensiRoutes = require("./module/presensi/presensiRoutes.js");
+const presensiRoutes = require("./modules/presensi/presensiRoutes.js");
 // const laporanRoutes = require("./modules/laporan/laporanRoutes.js");
 
 const whitelist = process.env.CORS_ORIGIN_ALLOW.split(",");
@@ -35,7 +35,7 @@ app.use(morgan("dev"));
 // Routing
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-// app.use("/api/presensi", presensiRoutes);
+app.use("/api/presensi", presensiRoutes);
 // app.use("/api/laporan", laporanRoutes);
 
 // Error handling
