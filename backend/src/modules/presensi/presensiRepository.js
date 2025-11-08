@@ -112,4 +112,20 @@ const addOrUpdatePresensi = async (userId, form) => {
   }
 };
 
-module.exports = { findById, findAll, addOrUpdatePresensi };
+const deleteById = async (id) => {
+  try {
+    return await prisma.attendance.delete({
+      where: { id },
+      select: {
+        id: true,
+        userId: true,
+        status: true,
+      },
+    });
+  } catch (error) {
+    console.error("deleteById error:", error);
+    throw new Error("Gagal menghapus presensi");
+  }
+};
+
+module.exports = { findById, findAll, addOrUpdatePresensi, deleteById };

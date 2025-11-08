@@ -66,7 +66,7 @@ model Attendance {
 
   @@index([userId, date])
   @@index([date])
-  @@unique([userId, date]) // one attendance record per user per date
+  @@unique([userId, date]) // one attendance record per user per datereq.body
 }
 
 model AuditLog {

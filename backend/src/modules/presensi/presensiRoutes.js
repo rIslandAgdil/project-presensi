@@ -4,6 +4,7 @@ const {
   getPresensiById,
   getPresensiByDate,
   upsertPresensi,
+  deletePresensi,
 } = require("./presensiController");
 
 // Membuat router yang terproteksi
@@ -13,6 +14,7 @@ const route = protectedRoute();
 route.get("/", getAllPresensi);
 route.get("/:id", getPresensiById);
 // route.get("/:date", getPresensiByDate);
-// route.put("/:id", upsertPresensi);
+route.put("/:id", upsertPresensi);
+route.delete("/:id", deletePresensi);
 
 module.exports = route;
