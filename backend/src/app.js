@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const userRoutes = require("./modules/user/userRoutes.js");
 const authRoutes = require("./modules/auth/authRoutes.js");
 const presensiRoutes = require("./modules/presensi/presensiRoutes.js");
-// const laporanRoutes = require("./modules/laporan/laporanRoutes.js");
+const laporanRoutes = require("./modules/laporan/laporanRoutes.js");
 
 const whitelist = process.env.CORS_ORIGIN_ALLOW.split(",");
 
@@ -24,6 +24,7 @@ const corsOptions = {
     }
   },
   optionsSuccessStatus: 200, // Untuk memastikan response preflight OPTIONS sukses di browser lama
+  credentials: true,
 };
 
 // Middleware
@@ -36,7 +37,7 @@ app.use(morgan("dev"));
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/presensi", presensiRoutes);
-// app.use("/api/laporan", laporanRoutes);
+app.use("/api/laporan", laporanRoutes);
 
 // Error handling
 // app.use((err, req, res, next) => {

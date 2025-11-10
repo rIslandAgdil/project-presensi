@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import Layout from "./components/Layout";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import PresensiList from "./components/PresensiList";
+import UserList from "./components/UserList";
+import LaporanList from "./components/LaporanList";
 
-function App() {
-  const [count, setCount] = useState(0)
+const AppContent = () => {
+  const { user, loading } = useAuth();
+  const [currentPage, setCurrentPage] = useState("dashboard");
+
+  useEffect(() => {
+    if (!user && !loading) {
+      setCurrentPage("login");
+    } else if (user) {
+      setCurrentPage("dashboard");
+    }
+  }, [user, loading]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-gray-500">Memuat...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Login onLoginSuccess={() => setCurrentPage("dashboard")} />;
+  }
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case "dashboard":
+        return <Dashboard />;
+      case "presensi":
+        return <PresensiList />;
+      case "user":
+        return <UserList />;
+      case "laporan":
+        return <LaporanList />;
+      default:
+        return <Dashboard />;
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Layout currentPage={currentPage} onNavigate={setCurrentPage}>
+      {renderPage()}
+    </Layout>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
